@@ -1,0 +1,55 @@
+create database Car_Rental;
+
+use Car_Rental;
+
+create table PassportUsers(
+    PassportId int primary key auto_increment,
+    Firstname varchar(50),
+    MiddleName varchar(50),
+    LastName varchar(50),
+    Series int,
+    Number int,
+    DateBirthday date
+);
+
+create table Users(
+    UserId int primary key auto_increment,
+    UserLogin varchar(50),
+    UserPassword varchar(50),
+    UserEmail varchar(50),
+    UserPassportId int,
+    FOREIGN KEY (UserPassportId) references PassportUsers(PassportId)
+);
+
+create table CarPassport(
+    CarPassportId int primary key auto_increment,
+    CarName varchar(50),
+    CarBrand varchar(50),
+    CarCategory varchar(50),
+    CarPower int,
+    CountryOfOrigin varchar(50),
+    DateRelease date
+);
+
+create table Cars(
+    CarId int primary key auto_increment,
+    CarDescription text,
+    MainImageCar text,
+    Images text,
+    CarPassportId int,
+    PricePerDay float,
+    Availability boolean,
+    foreign key (CarPassportId) references CarPassport(CarPassportId)
+);
+
+create table Bookings(
+    Id int primary key auto_increment,
+    UserId int,
+    CarId int,
+    StartDate date,
+    EndDate date,
+    TotalPrice float,
+    BookingStatus varchar(50),
+    foreign key (UserId) references Users(UserId),
+    foreign key (CarId) references Cars(CarId)
+);
